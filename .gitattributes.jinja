@@ -1,0 +1,218 @@
+# {{ project_name }} Git Attributes
+# https://git-scm.com/docs/gitattributes
+
+# ===================
+# 基本設定
+# ===================
+* text=auto eol=lf
+
+# ===================
+# テキストファイル
+# ===================
+*.txt text
+*.md text diff=markdown
+*.mdx text diff=markdown
+*.csv text
+*.tsv text
+*.xml text
+*.svg text
+*.html text diff=html
+*.htm text diff=html
+*.css text diff=css
+*.scss text diff=css
+*.sass text diff=css
+*.less text diff=css
+
+# ===================
+# 設定ファイル
+# ===================
+*.json text
+*.yml text
+*.yaml text
+*.toml text
+*.ini text
+*.cfg text
+*.conf text
+*.env text
+.editorconfig text
+.gitattributes text
+.gitignore text
+.gitmodules text
+
+# ===================
+# シェルスクリプト
+# ===================
+*.sh text eol=lf
+*.bash text eol=lf
+*.zsh text eol=lf
+*.fish text eol=lf
+
+# ===================
+# Windows バッチ
+# ===================
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# ===================
+# ドキュメント
+# ===================
+*.pdf binary
+*.doc binary
+*.docx binary
+*.xls binary
+*.xlsx binary
+*.ppt binary
+*.pptx binary
+
+# ===================
+# 画像
+# ===================
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.avif binary
+*.bmp binary
+*.tiff binary
+*.svg text
+
+# ===================
+# フォント
+# ===================
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
+
+# ===================
+# アーカイブ
+# ===================
+*.zip binary
+*.tar binary
+*.gz binary
+*.bz2 binary
+*.7z binary
+*.rar binary
+
+{% if 'Python' in languages %}
+# ===================
+# Python
+# ===================
+*.py text diff=python
+*.pyi text diff=python
+*.pyx text diff=python
+*.pxd text diff=python
+*.ipynb text
+requirements*.txt text
+Pipfile text
+pyproject.toml text
+setup.py text diff=python
+setup.cfg text
+
+{% endif %}
+{% if 'Node' in languages or 'TypeScript' in languages %}
+# ===================
+# JavaScript / TypeScript
+# ===================
+*.js text
+*.jsx text
+*.mjs text
+*.cjs text
+*.ts text
+*.tsx text
+*.mts text
+*.cts text
+*.vue text
+*.svelte text
+package.json text
+package-lock.json text -diff
+pnpm-lock.yaml text -diff
+yarn.lock text -diff
+tsconfig.json text
+jsconfig.json text
+
+{% endif %}
+{% if 'Go' in languages %}
+# ===================
+# Go
+# ===================
+*.go text diff=golang
+go.mod text
+go.sum text -diff
+
+{% endif %}
+{% if 'PHP' in languages %}
+# ===================
+# PHP
+# ===================
+*.php text diff=php
+*.phtml text diff=php
+*.blade.php text diff=php
+*.twig text
+composer.json text
+composer.lock text -diff
+phpunit.xml text
+phpstan.neon text
+
+{% endif %}
+# ===================
+# Docker
+# ===================
+Dockerfile text
+*.dockerfile text
+docker-compose*.yml text
+docker-compose*.yaml text
+.dockerignore text
+
+# ===================
+# CI/CD
+# ===================
+Makefile text
+Rakefile text
+Justfile text
+.github/** text
+.gitlab-ci.yml text
+.travis.yml text
+Jenkinsfile text
+
+# ===================
+# Linguist (GitHub表示)
+# ===================
+# 生成ファイルを言語統計から除外
+*.min.js linguist-generated
+*.min.css linguist-generated
+*-lock.json linguist-generated
+*.lock linguist-generated
+
+# vendorディレクトリを除外
+vendor/** linguist-vendored
+node_modules/** linguist-vendored
+
+# ドキュメントを除外
+docs/** linguist-documentation
+
+{% if enable_writing_env %}
+# ===================
+# Typst / 執筆環境
+# ===================
+*.typ text
+*.typst text
+
+{% endif %}
+{% if enable_linters %}
+# ===================
+# リンター/フォーマッター設定
+# ===================
+.textlintrc.json text
+prh.yml text
+prh-ja-punctuation.yml text
+eslint.config.js text
+.prettierrc.json text
+pyproject.toml text
+.golangci.yml text
+.php-cs-fixer.dist.php text diff=php
+{% endif %}

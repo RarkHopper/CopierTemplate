@@ -1,0 +1,93 @@
+_templates_suffix: .jinja
+_skip_if_exists:
+    - "*.md"
+_exclude:
+    - copier.yml
+    - .git
+
+project_name:
+    type: str
+    help: プロジェクトの名前を入力してください
+
+languages:
+    type: str
+    help: 使用する言語を選択してください（複数選択可）
+    multiselect: true
+    choices:
+        - Python
+        - Node
+        - TypeScript
+        - Go
+        - PHP
+
+indent_style:
+    type: str
+    help: インデントスタイルを選択してください
+    default: space
+    choices:
+        - space
+        - tab
+
+indent_size:
+    type: int
+    help: インデントサイズ（スペースの場合）
+    default: 4
+    when: "{{ indent_style == 'space' }}"
+
+# 執筆環境
+enable_writing_env:
+    type: bool
+    help: 執筆環境（Typst + textlint）を有効にするか
+    default: false
+
+# リンター有効化
+enable_linters:
+    type: bool
+    help: リンター/フォーマッター設定を生成するか
+    default: true
+
+# パッケージマネージャー（Node/TS/執筆環境時）
+node_package_manager:
+    type: str
+    help: Node.jsパッケージマネージャーを選択してください
+    default: pnpm
+    choices:
+        - npm
+        - pnpm
+        - yarn
+    when: "{{ 'Node' in languages or 'TypeScript' in languages or enable_writing_env }}"
+
+# Python版（ruff用）
+python_version:
+    type: str
+    help: Pythonバージョン（ruff target-version用）
+    default: py312
+    choices:
+        - py39
+        - py310
+        - py311
+        - py312
+        - py313
+    when: "{{ 'Python' in languages and enable_linters }}"
+
+# Go linterプリセット
+go_linter_preset:
+    type: str
+    help: golangci-lintプリセットを選択してください
+    default: standard
+    choices:
+        - standard
+        - fast
+        - all
+    when: "{{ 'Go' in languages and enable_linters }}"
+
+# PHPルールセット
+php_ruleset:
+    type: str
+    help: PHP-CS-Fixerルールセットを選択してください
+    default: PSR12
+    choices:
+        - PSR12
+        - Symfony
+        - PhpCsFixer
+    when: "{{ 'PHP' in languages and enable_linters }}"

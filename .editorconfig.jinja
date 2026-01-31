@@ -1,0 +1,148 @@
+# {{ project_name }} EditorConfig
+# https://editorconfig.org
+
+root = true
+
+# ===================
+# 全ファイル共通
+# ===================
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = {{ indent_style }}
+{% if indent_style == 'space' %}
+indent_size = {{ indent_size }}
+{% else %}
+indent_size = 4
+tab_width = 4
+{% endif %}
+
+# ===================
+# Markdown
+# ===================
+[*.md]
+trim_trailing_whitespace = false
+
+# ===================
+# YAML / JSON
+# ===================
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+[*.json]
+indent_style = space
+indent_size = 2
+
+# ===================
+# Makefile
+# ===================
+[Makefile]
+indent_style = tab
+
+[*.mk]
+indent_style = tab
+
+{% if 'Python' in languages %}
+# ===================
+# Python
+# ===================
+[*.py]
+indent_style = space
+indent_size = 4
+max_line_length = 88
+
+[*.pyi]
+indent_style = space
+indent_size = 4
+
+{% endif %}
+{% if 'Node' in languages or 'TypeScript' in languages %}
+# ===================
+# JavaScript / TypeScript
+# ===================
+[*.{js,jsx,mjs,cjs}]
+indent_style = space
+indent_size = 2
+
+[*.{ts,tsx,mts,cts}]
+indent_style = space
+indent_size = 2
+
+[*.vue]
+indent_style = space
+indent_size = 2
+
+{% endif %}
+{% if 'Go' in languages %}
+# ===================
+# Go
+# ===================
+[*.go]
+indent_style = tab
+indent_size = 4
+tab_width = 4
+
+[go.mod]
+indent_style = tab
+
+[go.sum]
+indent_style = tab
+
+{% endif %}
+{% if 'PHP' in languages %}
+# ===================
+# PHP (PSR-12準拠)
+# ===================
+[*.php]
+indent_style = space
+indent_size = 4
+
+[*.blade.php]
+indent_style = space
+indent_size = 4
+
+{% endif %}
+# ===================
+# Shell scripts
+# ===================
+[*.sh]
+indent_style = space
+indent_size = 4
+
+[*.bash]
+indent_style = space
+indent_size = 4
+
+# ===================
+# HTML / CSS
+# ===================
+[*.{html,htm}]
+indent_style = space
+indent_size = 2
+
+[*.{css,scss,sass,less}]
+indent_style = space
+indent_size = 2
+
+# ===================
+# Config files
+# ===================
+[.env*]
+insert_final_newline = false
+
+[*.toml]
+indent_style = space
+indent_size = 2
+
+{% if enable_writing_env %}
+# ===================
+# Typst
+# ===================
+[*.typ]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+{% endif %}
