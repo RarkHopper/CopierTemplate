@@ -1,0 +1,128 @@
+{# .golangci.yml - Go linter設定 #}
+{% if 'Go' in languages and enable_linters -%}
+# golangci-lint configuration
+# Preset: {{ go_linter_preset }}
+
+run:
+  timeout: 5m
+  issues-exit-code: 1
+  tests: true
+
+output:
+  formats:
+    - format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+
+linters:
+  disable-all: true
+  enable:
+{%- if go_linter_preset == 'fast' %}
+    # Fast preset - 高速なリンターのみ
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+{%- elif go_linter_preset == 'all' %}
+    # All preset - すべての推奨リンター
+    - bodyclose
+    - dogsled
+    - dupl
+    - errcheck
+    - errorlint
+    - exhaustive
+    - copyloopvar
+    - goconst
+    - gocritic
+    - gocyclo
+    - gofmt
+    - goimports
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - misspell
+    - nakedret
+    - nilerr
+    - noctx
+    - prealloc
+    - revive
+    - staticcheck
+    - stylecheck
+    - tparallel
+    - unconvert
+    - unparam
+    - unused
+    - whitespace
+{%- else %}
+    # Standard preset - バランスの取れた設定
+    - errcheck
+    - errorlint
+    - gocritic
+    - gofmt
+    - goimports
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - misspell
+    - revive
+    - staticcheck
+    - stylecheck
+    - unconvert
+    - unused
+{%- endif %}
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+
+  govet:
+    enable-all: true
+
+  gocyclo:
+    min-complexity: 15
+
+  dupl:
+    threshold: 100
+
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+
+  misspell:
+    locale: US
+
+  revive:
+    rules:
+      - name: blank-imports
+      - name: context-as-argument
+      - name: context-keys-type
+      - name: error-return
+      - name: error-strings
+      - name: error-naming
+      - name: exported
+      - name: increment-decrement
+      - name: var-naming
+      - name: package-comments
+      - name: range
+      - name: receiver-naming
+      - name: time-naming
+      - name: unexported-return
+      - name: indent-error-flow
+      - name: errorf
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - dupl
+        - gosec
+        - goconst
+
+  max-issues-per-linter: 0
+  max-same-issues: 0
+{% endif -%}
