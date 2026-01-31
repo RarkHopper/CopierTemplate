@@ -1,0 +1,42 @@
+{# eslint.config.js - ESLint v9 flat config #}
+{% if ('Node' in languages or 'TypeScript' in languages) and enable_linters -%}
+import js from "@eslint/js";
+{%- if 'TypeScript' in languages %}
+import tseslint from "typescript-eslint";
+{%- endif %}
+import eslintConfigPrettier from "eslint-config-prettier";
+
+{% if 'TypeScript' in languages -%}
+export default tseslint.config(
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  eslintConfigPrettier,
+  {
+    ignores: ["node_modules/", "dist/", "build/", "coverage/"],
+  },
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_" },
+      ],
+    },
+  }
+);
+{%- else -%}
+export default [
+  js.configs.recommended,
+  eslintConfigPrettier,
+  {
+    ignores: ["node_modules/", "dist/", "build/", "coverage/"],
+  },
+  {
+    files: ["**/*.js", "**/*.mjs", "**/*.cjs"],
+    rules: {
+      "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    },
+  },
+];
+{%- endif %}
+{% endif -%}

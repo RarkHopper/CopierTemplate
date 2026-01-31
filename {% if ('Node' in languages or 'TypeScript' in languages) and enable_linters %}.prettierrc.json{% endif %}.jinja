@@ -1,0 +1,13 @@
+{# .prettierrc.json - Prettier設定 #}
+{% if ('Node' in languages or 'TypeScript' in languages) and enable_linters -%}
+{
+  "semi": true,
+  "singleQuote": false,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "endOfLine": "lf"
+}
+{% endif -%}
