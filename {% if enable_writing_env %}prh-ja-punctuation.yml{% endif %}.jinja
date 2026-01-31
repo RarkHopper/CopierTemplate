@@ -1,0 +1,22 @@
+{# prh-ja-punctuation.yml - 句読点ルール（学術論文向け：，．使用） #}
+{% if enable_writing_env -%}
+version: 1
+
+rules:
+  # ===================
+  # 句読点の統一（学術論文向け）
+  # ===================
+  # 読点：全角コンマ（，）を使用
+  - expected: ，
+    pattern: /、/
+    specs:
+      - from: これは、テストです
+        to: これは，テストです
+
+  # 句点：全角ピリオド（．）を使用
+  - expected: ．
+    pattern: /。(?![」』）])/
+    specs:
+      - from: これはテストです。
+        to: これはテストです．
+{% endif -%}

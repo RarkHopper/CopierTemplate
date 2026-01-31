@@ -1,0 +1,45 @@
+{# package.json - Node/TS/執筆環境の依存関係 #}
+{% if 'Node' in languages or 'TypeScript' in languages or enable_writing_env -%}
+{
+  "name": "{{ project_name | lower | replace(' ', '-') }}",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+{%- if enable_writing_env %}
+    "lint:text": "textlint \"**/*.typ\"",
+    "lint:text:fix": "textlint --fix \"**/*.typ\""{% if ('Node' in languages or 'TypeScript' in languages) and enable_linters %},{% endif %}
+
+{%- endif %}
+{%- if ('Node' in languages or 'TypeScript' in languages) and enable_linters %}
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+{%- endif %}
+
+  },
+  "devDependencies": {
+{%- if enable_writing_env %}
+    "textlint": "^14.4.0",
+    "textlint-filter-rule-allowlist": "^4.0.0",
+    "textlint-filter-rule-comments": "^1.2.2",
+    "textlint-plugin-typst": "^0.1.0",
+    "textlint-rule-preset-ja-technical-writing": "^10.0.1",
+    "textlint-rule-prh": "^6.0.0"{% if ('Node' in languages or 'TypeScript' in languages) and enable_linters %},{% endif %}
+
+{%- endif %}
+{%- if ('Node' in languages or 'TypeScript' in languages) and enable_linters %}
+    "@eslint/js": "^9.18.0",
+{%- if 'TypeScript' in languages %}
+    "typescript-eslint": "^8.21.0",
+    "typescript": "^5.7.3",
+{%- endif %}
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "prettier": "^3.4.2"
+{%- endif %}
+
+  }
+}
+{% endif -%}

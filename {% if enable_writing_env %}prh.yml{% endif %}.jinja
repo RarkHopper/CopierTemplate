@@ -1,0 +1,50 @@
+{# prh.yml - 固有名詞辞書テンプレート #}
+{% if enable_writing_env -%}
+version: 1
+
+rules:
+  # ===================
+  # 技術用語の統一
+  # ===================
+  - expected: JavaScript
+    patterns:
+      - javascript
+      - Javascript
+      - JAVASCRIPT
+
+  - expected: TypeScript
+    patterns:
+      - typescript
+      - Typescript
+      - TYPESCRIPT
+
+  - expected: Python
+    patterns:
+      - python
+      - PYTHON
+    specs:
+      - from: python
+        to: Python
+
+  - expected: GitHub
+    patterns:
+      - github
+      - Github
+      - GITHUB
+
+  - expected: VS Code
+    patterns:
+      - VSCode
+      - vscode
+      - VS code
+      - Vscode
+
+  # ===================
+  # プロジェクト固有名詞
+  # ===================
+  # 以下に追加してください
+  # - expected: 正しい表記
+  #   patterns:
+  #     - 誤った表記1
+  #     - 誤った表記2
+{% endif -%}

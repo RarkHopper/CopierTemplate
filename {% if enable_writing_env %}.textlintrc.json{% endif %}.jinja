@@ -1,0 +1,30 @@
+{# .textlintrc.json - textlint設定（学術論文向け句読点、である調） #}
+{% if enable_writing_env -%}
+{
+  "plugins": ["typst"],
+  "filters": {
+    "comments": true,
+    "allowlist": {
+      "allow": []
+    }
+  },
+  "rules": {
+    "preset-ja-technical-writing": {
+      "sentence-length": {
+        "max": 100
+      },
+      "max-ten": {
+        "max": 5
+      },
+      "no-exclamation-question-mark": false,
+      "ja-no-mixed-period": {
+        "periodMark": "．",
+        "allowPeriodMarks": ["。"]
+      }
+    },
+    "prh": {
+      "rulePaths": ["./prh.yml", "./prh-ja-punctuation.yml"]
+    }
+  }
+}
+{% endif -%}
